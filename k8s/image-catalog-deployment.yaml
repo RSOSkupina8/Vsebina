@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: image-catalog-deployment
+  name: artikli-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: image-catalog
+      app: artikli
   template:
     metadata:
       labels:
-        app: image-catalog
+        app: artikli
     spec:
       containers:
-        - image: prporso/image-catalog:2022-11-14-12-45-13
-          name: image-catalog
+        - image: prporso/artikli:2022-11-14-12-45-13
+          name: artikli
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
               value: jdbc:postgresql://fanny.db.elephantsql.com:5432/zqjqqtrd
@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: image-catalog
+  name: artikli
 spec:
   type: LoadBalancer
   ports:
@@ -55,4 +55,4 @@ spec:
       protocol: TCP
       targetPort: server
   selector:
-    app: image-catalog
+    app: artikli
