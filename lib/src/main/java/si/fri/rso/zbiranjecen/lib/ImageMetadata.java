@@ -1,4 +1,4 @@
-package si.fri.rso.samples.artikli.lib;
+package si.fri.rso.zbiranjecen.lib;
 
 import java.time.Instant;
 

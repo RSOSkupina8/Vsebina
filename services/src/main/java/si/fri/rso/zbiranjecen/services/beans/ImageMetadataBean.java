@@ -1,4 +1,10 @@
-package si.fri.rso.samples.artikli.services.beans;
+package si.fri.rso.zbiranjecen.services.beans;
+
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.rso.zbiranjecen.lib.ImageMetadata;
+import si.fri.rso.zbiranjecen.models.converters.ImageMetadataConverter;
+import si.fri.rso.zbiranjecen.models.entities.ImageMetadataEntity;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -9,14 +15,6 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import com.kumuluz.ee.rest.beans.QueryParameters;
-import com.kumuluz.ee.rest.utils.JPAUtils;
-
-import org.eclipse.microprofile.metrics.annotation.Timed;
-import si.fri.rso.samples.artikli.lib.ImageMetadata;
-import si.fri.rso.samples.artikli.models.converters.ImageMetadataConverter;
-import si.fri.rso.samples.artikli.models.entities.ImageMetadataEntity;
 
 
 @RequestScoped
@@ -38,7 +36,6 @@ public class ImageMetadataBean {
 
     }
 
-    @Timed
     public List<ImageMetadata> getImageMetadataFilter(UriInfo uriInfo) {
 
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0)

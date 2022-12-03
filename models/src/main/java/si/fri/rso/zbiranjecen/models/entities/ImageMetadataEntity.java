@@ -1,4 +1,4 @@
-package si.fri.rso.samples.artikli.models.entities;
+package si.fri.rso.zbiranjecen.models.entities;
 
 import javax.persistence.*;
 import java.time.Instant;

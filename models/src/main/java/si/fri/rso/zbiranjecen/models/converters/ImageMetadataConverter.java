@@ -1,7 +1,7 @@
-package si.fri.rso.samples.artikli.models.converters;
+package si.fri.rso.zbiranjecen.models.converters;
 
-import si.fri.rso.samples.artikli.lib.ImageMetadata;
-import si.fri.rso.samples.artikli.models.entities.ImageMetadataEntity;
+import si.fri.rso.zbiranjecen.lib.ImageMetadata;
+import si.fri.rso.zbiranjecen.models.entities.ImageMetadataEntity;
 
 public class ImageMetadataConverter {
 

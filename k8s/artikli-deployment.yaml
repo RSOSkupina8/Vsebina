@@ -13,7 +13,7 @@ spec:
         app: artikli
     spec:
       containers:
-        - image: prporso/artikli:2022-11-14-12-45-13
+        - image: fdemsar/artikli
           name: artikli
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
