@@ -21,7 +21,10 @@ spec:
             - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: ajhhwgxt
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
-              value: zqRrhFMDxJgfMDa07S5KtM43ebWXuEqW
+              valueFrom:
+                secretKeyRef:
+                  name: pg-pass-artikli
+                  key: KUMULUZEE_DATASOURCES0_PASSWORD
           ports:
             - containerPort: 8080
               name: server

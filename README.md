@@ -21,11 +21,11 @@ Available at: localhost:8080/v1/artikli
 ~~~~
 ## Docker commands
 ```bash 
-docker build -t novaslika .   ~~~~
+docker build -t artikli .   ~~~~
 docker images
-docker run novaslika    
-docker tag novaslika prporso/novaslika   
-docker push prporso/novaslika
+docker run artikli    
+docker tag artikli fdemsar/artikli   
+docker push fdemsar/novaslika
 docker ps
 ```
 
@@ -35,7 +35,7 @@ docker network rm rso
 docker network create rso
 docker run -d --name pg-artikli -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=artikli -p 5432:5432 --network rso postgres:13
 docker inspect pg-artikli
-docker run -p 8080:8080 --network rso -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-artikli:5432/artikli prporso/artikli:2022-11-14-12-45-13
+docker run -p 8080:8080 --network rso -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-artikli:5432/artikli fdemsar/artikli
 ```
 
 ## Consul
