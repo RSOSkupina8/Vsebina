@@ -25,7 +25,7 @@ docker build -t artikli .   ~~~~
 docker images
 docker run artikli    
 docker tag artikli fdemsar/artikli   
-docker push fdemsar/novaslika
+docker push fdemsar/artikli
 docker ps
 ```
 
