@@ -13,7 +13,7 @@ spec:
         app: vsebina
     spec:
       containers:
-        - image: gregorzadnik/vsebina
+        - image: gregorzadnik/vsebina:2023-01-10-17-41-49
           name: vsebina
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -51,7 +51,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: Vsebina
+    - port: 8080
       protocol: TCP
       targetPort: server
   selector:

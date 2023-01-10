@@ -1,5 +1,6 @@
 package si.fri.rso.samples.vsebina.api.v1.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -33,6 +34,7 @@ import java.util.logging.Logger;
 @Path("/vsebina")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(supportedMethods = "GET, POST, PUT, DELETE, HEAD, OPTIONS")
 public class VsebinaResource {
 
     private Logger log = Logger.getLogger(VsebinaResource.class.getName());
