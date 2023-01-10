@@ -1,1 +1,1 @@
-INSERT INTO artikli (name, product, price, gross_weight, created, uri) VALUES ('Item 0', 'Meat', 15.8, 69.8, TIMESTAMP '2006-01-01 15:36:38', 'https://www.nasa.gov/sites/default/files/styles/full_width/public/thumbnails/image/tess_first_light-tb.jpg');
+INSERT INTO vsebina (kosaricaId, artikelId) VALUES (1,3),(1,2);

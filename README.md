@@ -1,31 +1,31 @@
-# RSO: Artikli metadata microservice
+# RSO: Vsebina microservice
 
 ## Prerequisites
 
 ```bash
-docker run -d --name pg-artikli -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=artikli -p 5432:5432 postgres:13
+docker run -d --name pg-vsebina -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=vsebina -p 5432:5432 postgres:13
 ```
 
 ## Build and run commands
 ```bash
 mvn clean package
 cd api/target
-java -jar artikli-api-1.0.0-SNAPSHOT.jar
+java -jar vsebina-api-1.0.0-SNAPSHOT.jar
 ```
-Available at: localhost:8080/v1/artikli~~~~
+Available at: localhost:8080/v1/vsebina~~~~
 
 ## Run in IntelliJ IDEA~~~~
 Add new Run configuration and select the Application type. In the next step, select the module api and for the main class com.kumuluz.ee.EeApplication.
 
-Available at: localhost:8080/v1/artikli
+Available at: localhost:8080/v1/vsebina
 ~~~~
 ## Docker commands
 ```bash 
-docker build -t artikli .   ~~~~
+docker build -t vsebina .   ~~~~
 docker images
-docker run artikli    
-docker tag artikli fdemsar/artikli   
-docker push fdemsar/artikli
+docker run vsebina    
+docker tag vsebina gregorzadnik/vsebina   
+docker push gregorzadnik/vsebina
 docker ps
 ```
 
@@ -33,9 +33,9 @@ docker ps
 docker network ls  
 docker network rm rso
 docker network create rso
-docker run -d --name pg-artikli -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=artikli -p 5432:5432 --network rso postgres:13
-docker inspect pg-artikli
-docker run -p 8080:8080 --network rso -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-artikli:5432/artikli fdemsar/artikli
+docker run -d --name pg-vsebina -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=vsebina -p 5434:5432 --network rso postgres:13
+docker inspect pg-vsebina
+docker run -p 8082:8082 --network rso -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-vsebina:5432/vsebina gregorzadnik/vsebina
 ```
 
 ## Consul
@@ -44,7 +44,7 @@ consul agent -dev
 ```
 Available at: localhost:8500
 
-Key: environments/dev/services/artikli-service/1.0.0/config/rest-properties/maintenance-mode
+Key: environments/dev/services/vsebina-service/1.0.0/config/rest-properties/maintenance-mode
 
 Value: true or false
 
@@ -53,13 +53,13 @@ Value: true or false
 kubectl version
 kubectl --help
 kubectl get nodes
-kubectl create -f artikli-deployment.yaml 
-kubectl apply -f artikli-deployment.yaml 
+kubectl create -f vsebina-deployment.yaml 
+kubectl apply -f vsebina-deployment.yaml 
 kubectl get services 
 kubectl get deployments
 kubectl get pods
-kubectl logs artikli-deployment-6f59c5d96c-rjz46
-kubectl delete pod artikli-deployment-6f59c5d96c-rjz46
+kubectl logs vsebina-deployment-6f59c5d96c-rjz46
+kubectl delete pod vsebina-deployment-6f59c5d96c-rjz46
 ```
 Secrets: https://kubernetes.io/docs/concepts/configuration/secret/
 

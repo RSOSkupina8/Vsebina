@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vsebina-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vsebina
+  template:
+    metadata:
+      labels:
+        app: vsebina
+    spec:
+      containers:
+        - image: gregorzadnik/vsebina
+          name: vsebina
+          env:
+            - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+              value: jdbc:postgresql://mouse.db.elephantsql.com:5432/ajhhwgxt
+            - name: KUMULUZEE_DATASOURCES0_USERNAME
+              value: ajhhwgxt
+            - name: KUMULUZEE_DATASOURCES0_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pg-pass-vsebina
+                  key: KUMULUZEE_DATASOURCES0_PASSWORD
+          ports:
+            - containerPort: 8082
+              name: server
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: server
+            initialDelaySeconds: 40
+            periodSeconds: 3
+          readinessProbe:
+              httpGet:
+                path: /health/ready
+                port: server
+              initialDelaySeconds: 40
+              periodSeconds: 3
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: vsebina
+spec:
+  type: LoadBalancer
+  ports:
+    - port: Vsebina
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: vsebina

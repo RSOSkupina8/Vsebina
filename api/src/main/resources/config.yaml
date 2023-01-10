@@ -1,27 +1,27 @@
 kumuluzee:
-  name: artikli-service
+  name: vsebina-service
   env:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8080
+    base-url: http://localhost:8082
     http:
-      port: 8080
+      port: 8082
   datasources:
-    - jndi-name: jdbc/ArtikliDS
-      connection-url: jdbc:postgresql://localhost:5432/artikli
+    - jndi-name: jdbc/VsebinaDS
+      connection-url: jdbc:postgresql://localhost:5432/vsebina
       username: dbuser
       password: postgres
       max-pool-size: 20
   health:
     checks:
       data-source-health-check:
-        jndi-name: jdbc/ArtikliDS
+        jndi-name: jdbc/VsebinaDS
         type: liveness
   metrics:
     web-instrumentation:
-      - name: artikli-endpoint
-        url-pattern: /v1/artikli/*
+      - name: vsebina-endpoint
+        url-pattern: /v1/vsebina/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                           <Configuration name="comments">
