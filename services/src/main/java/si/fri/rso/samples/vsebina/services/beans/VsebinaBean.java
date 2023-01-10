@@ -41,11 +41,11 @@ import si.fri.rso.samples.vsebina.models.entities.VsebinaEntity;
 @RequestScoped
 public class VsebinaBean {
 
-    private String ipArtikli = "20.73.195.173";
+    private String ipArtikli = "20.126.195.188";
     private String portArtikli = "8080";
 
-    private String ipKosarice = "localhost";
-    private String portKosarice = "8081";
+    private String ipKosarice = "20.71.20.248";
+    private String portKosarice = "8080";
 
 
     private Logger log = Logger.getLogger(VsebinaBean.class.getName());
