@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.rso.samples.vsebina.lib.Artikel;
 import si.fri.rso.samples.vsebina.lib.Vsebina;
+import si.fri.rso.samples.vsebina.lib.VsebinaArtikel;
 import si.fri.rso.samples.vsebina.services.beans.VsebinaBean;
 import si.fri.rso.samples.vsebina.services.clients.AmazonRekognitionClient;
 
@@ -72,7 +73,7 @@ public class VsebinaResource {
     @Path("/kosarica/{kosaricaId}")
     public Response getVsebinaForKosarica(@Parameter(description = "kosarica ID.", required = true)
                                               @PathParam("kosaricaId") Integer kosaricaId){
-        List<Artikel> vsebina = vsebinaBean.getArtikliForKosarica(kosaricaId);
+        List<VsebinaArtikel> vsebina = vsebinaBean.getArtikliForKosarica(kosaricaId);
 
         if (vsebina == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

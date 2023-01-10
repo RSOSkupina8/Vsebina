@@ -15,8 +15,11 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,8 @@ import org.eclipse.microprofile.metrics.annotation.Timed;
 import si.fri.rso.samples.vsebina.lib.Artikel;
 import si.fri.rso.samples.vsebina.lib.Kosarica;
 import si.fri.rso.samples.vsebina.lib.Vsebina;
+import si.fri.rso.samples.vsebina.lib.VsebinaArtikel;
+import si.fri.rso.samples.vsebina.models.converters.VsebinaArtikelConverter;
 import si.fri.rso.samples.vsebina.models.converters.VsebinaConverter;
 import si.fri.rso.samples.vsebina.models.entities.VsebinaEntity;
 
@@ -36,7 +41,7 @@ import si.fri.rso.samples.vsebina.models.entities.VsebinaEntity;
 @RequestScoped
 public class VsebinaBean {
 
-    private String ipArtikli = "20.101.31.187";
+    private String ipArtikli = "20.73.195.173";
     private String portArtikli = "8080";
 
     private String ipKosarice = "localhost";
@@ -48,14 +53,13 @@ public class VsebinaBean {
     @Inject
     private EntityManager em;
 
-    public List<Artikel> getArtikliForKosarica(Integer kosaricaId){
+    public List<VsebinaArtikel> getArtikliForKosarica(Integer kosaricaId){
         TypedQuery<VsebinaEntity> query = em.createNamedQuery(
                 "VsebinaEntity.getForKosaricaId", VsebinaEntity.class);
         query.setParameter("kosaricaId", kosaricaId);
         List<VsebinaEntity> resultList = query.getResultList();
 
         String artikliUrl = String.format("http://%s:%s/v1/artikli", ipArtikli, portArtikli);
-        //artikliUrl = "https://jsonplaceholder.typicode.com/todos/1";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -67,25 +71,37 @@ public class VsebinaBean {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        List<Artikel> result = null;
+        List<VsebinaArtikel> rezultat = null;
         System.out.println(artikliUrl);
 
         try {
             System.out.println("before response");
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
-            List<Artikel> artikli = Arrays.asList(objectMapper.readValue(response.body(), Artikel[].class));
-            result = artikli;
-            System.out.println(artikli.size());
+            CompletableFuture<HttpResponse<String>> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.get());
+            List<Artikel> artikli = Arrays.asList(objectMapper.readValue(response.get().body(), Artikel[].class));
+
+            rezultat = new ArrayList<VsebinaArtikel>();
+            for(int i = 0; i < resultList.size(); i++){
+                VsebinaEntity ve = resultList.get(i);
+                for(int j = 0; j < artikli.size(); j++){
+                    Artikel a = artikli.get(j);
+                    if(a.getArtikelId() == ve.getArtikelId()){
+                        rezultat.add(VsebinaArtikelConverter.toDto(a,ve));
+                    }
+                }
+            }
+
 
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
         }
 
-        return result;
+        return rezultat;
         //return resultList.stream().map(VsebinaConverter::toDto).collect(Collectors.toList());
     }
 
